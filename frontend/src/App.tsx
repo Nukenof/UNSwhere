@@ -1,4 +1,4 @@
-import Map, { Source, Layer, type LayerProps } from 'react-map-gl/maplibre';
+import Map, { Source, Layer, type LayerProps, type MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import type { StyleSpecification } from 'maplibre-gl';
 import type { FeatureCollection } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -31,6 +31,13 @@ const layerStyle: LayerProps = {
 };
 
 function App() {
+  const handleClick = (e: MapLayerMouseEvent) => {
+    const feature = e.features?.[0];
+    console.log(e.features)
+    if (!feature) return; 
+    console.log('clicked building:', feature.properties);
+  };
+
   return (
     <Map
       initialViewState={{
@@ -40,6 +47,8 @@ function App() {
       }}
       style={{width: "100vw", height: "100vh"}}
       mapStyle={BASE_STYLE}
+      interactiveLayerIds={['buildings']}
+      onClick={handleClick}
     >
       <Source id="my-data" type="geojson" data={geojson as FeatureCollection}>
         <Layer {...layerStyle} />
