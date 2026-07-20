@@ -3,6 +3,7 @@ import type { StyleSpecification } from 'maplibre-gl';
 import type { FeatureCollection } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import geojson from './data/buildings.json';
+import { useState } from 'react';
 
 const BASE_STYLE: StyleSpecification = {
   version: 8,
@@ -38,22 +39,40 @@ function App() {
     console.log('clicked building:', feature.properties);
   };
 
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <Map
-      initialViewState={{
-        longitude: 151.2313,
-        latitude: -33.9173,
-        zoom: 16
+    <>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "absolute",
+        bottom: 16,
+        left: 16,
+        width: hovered ? 525 : 350,
+        height: hovered ? 375 : 250,
+        transition: 'width 0.2s ease, height 0.2s ease',
       }}
-      style={{width: "100vw", height: "100vh"}}
-      mapStyle={BASE_STYLE}
-      interactiveLayerIds={['buildings']}
-      onClick={handleClick}
     >
-      <Source id="my-data" type="geojson" data={geojson as FeatureCollection}>
-        <Layer {...layerStyle} />
-      </Source>
-    </Map>
+        <Map
+          initialViewState={{
+            longitude: 151.2313,
+            latitude: -33.9173,
+            zoom: 15
+          }}
+          style={{ width: '100%', height: '100%' }}
+          mapStyle={BASE_STYLE}
+          interactiveLayerIds={['buildings']}
+          onClick={handleClick}
+        >
+          <Source id="my-data" type="geojson" data={geojson as FeatureCollection}>
+            <Layer {...layerStyle} />
+          </Source>
+        </Map>
+      </div>
+      
+      </>
   );
 }
 
