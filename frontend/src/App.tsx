@@ -4,6 +4,8 @@ import type { FeatureCollection } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import geojson from './data/buildings.json';
 import { useState } from 'react';
+import sebLowerGround from './assets/SEBLowerGround.jpg';
+
 
 const BASE_STYLE: StyleSpecification = {
   version: 8,
@@ -43,6 +45,8 @@ function App() {
 
   return (
     <>
+
+    <img src={sebLowerGround} alt="SEB Lower Ground" style={ {width: "100vw", height: "100vh", position: "absolute"} }/>
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -50,9 +54,11 @@ function App() {
         position: "absolute",
         bottom: 16,
         left: 16,
-        width: hovered ? 525 : 350,
-        height: hovered ? 375 : 250,
-        transition: 'width 0.2s ease, height 0.2s ease',
+        width: 525,
+        height: 375,
+        transform: `scale(${hovered ? 1 : 350 / 525})`,
+        transformOrigin: 'bottom left',
+        transition: 'transform 0.2s ease',
       }}
     >
         <Map
