@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CampusMap from './CampusMap';
 
 
-function MapCard({ onBuildingClick }) {
+function MapCard() {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ function MapCard({ onBuildingClick }) {
         transition: 'transform 0.2s ease',
       }}
     >
-      <CampusMap onBuildingClick={onBuildingClick} />
+      <CampusMap/>
     </div>
   );
 }
