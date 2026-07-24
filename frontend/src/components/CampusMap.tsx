@@ -1,9 +1,8 @@
-import Map, { Source, Layer, type LayerProps, type MapLayerMouseEvent } from 'react-map-gl/maplibre';
+import Map, { Source, Layer, type LayerProps } from 'react-map-gl/maplibre';
 import type { StyleSpecification } from 'maplibre-gl';
 import type { FeatureCollection } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import geojson from '../data/buildings.json';
-import { useState } from 'react';
 
 const BASE_STYLE: StyleSpecification = {
   version: 8,
@@ -22,19 +21,22 @@ const BASE_STYLE: StyleSpecification = {
   layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
 };
 
-function CampusMap() {
-  const [selectedId, setSelectedId] = useState(null);
+interface CampusMapProps {
+  selectedId: number | null;
+  setSelectedId: (id: number | null) => void;
+}
 
+function CampusMap({ selectedId, setSelectedId }: CampusMapProps) {
   const onBuildingClick = (e) => {
     const building = e.features?.[0].properties;
     if (!building) return;
     console.log(building.id);
+    
     if (selectedId == null) {
       setSelectedId(building.id);
     } else {
       setSelectedId(null);
-    }
-    
+     }
   }
 
   const layerStyle: LayerProps = {
@@ -44,8 +46,8 @@ function CampusMap() {
     'fill-color': [
       'case',
       ['==', ['get', 'id'], selectedId ?? -1],
-      '#eb5757',   // selected  (red)
-      '#f2c94c',   // default   (yellow)
+      '#eb5757',
+      '#f2c94c',
     ],
     'fill-opacity': 0.5,
   },

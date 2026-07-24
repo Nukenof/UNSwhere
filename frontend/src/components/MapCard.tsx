@@ -2,7 +2,12 @@ import { useState } from 'react';
 import CampusMap from './CampusMap';
 
 
-function MapCard() {
+interface MapCardProps {
+  selectedId: number | null;
+  setSelectedId: (id: number | null) => void;
+}
+
+function MapCard({ selectedId, setSelectedId }: MapCardProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -20,7 +25,7 @@ function MapCard() {
         transition: 'transform 0.2s ease',
       }}
     >
-      <CampusMap/>
+      <CampusMap selectedId={selectedId} setSelectedId={setSelectedId} />
     </div>
   );
 }
