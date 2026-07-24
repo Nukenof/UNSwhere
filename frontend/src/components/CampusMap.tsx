@@ -32,11 +32,11 @@ function CampusMap({ selectedId, setSelectedId }: CampusMapProps) {
     if (!building) return;
     console.log(building.id);
     
-    if (selectedId == null) {
-      setSelectedId(building.id);
-    } else {
+    if (selectedId === building.id) {
       setSelectedId(null);
-     }
+    } else {
+      setSelectedId(building.id);
+    }
   }
 
   const layerStyle: LayerProps = {
