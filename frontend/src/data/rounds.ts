@@ -6,7 +6,9 @@ export interface Round {
   answerId: number; // must match a properties.id in buildings.json
 }
 
+// answerId values are OpenStreetMap way ids, matching properties.id in the
+// generated public/data/unsw-buildings.geojson.
 export const rounds: Round[] = [
-  { image: ainsworth, answerId: 1 }, // Ainsworth
-  { image: sebLowerGround, answerId: 2 }, // SEB (Science & Engineering Building)
+  { image: ainsworth, answerId: 616805099 }, // Ainsworth Building J17
+  { image: sebLowerGround, answerId: 616805101 }, // Science and Engineering Building (E8)
 ];

@@ -4,7 +4,7 @@ import Button from './components/Button';
 import { rounds } from './data/rounds';
 
 function App() {
-  const [current, setCurrent] = useState(0);
+  const [current] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const round = rounds[current];
 

@@ -1,8 +1,9 @@
-import Map, { Source, Layer, type LayerProps } from 'react-map-gl/maplibre';
+import Map, { Source, Layer, type LayerProps, type MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import type { StyleSpecification } from 'maplibre-gl';
-import type { FeatureCollection } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import geojson from '../data/buildings.json';
+
+// Generated at build time by `npm run update-campus` (scripts/update-campus-data.ts).
+const BUILDINGS_URL = '/data/unsw-buildings.geojson';
 
 const BASE_STYLE: StyleSpecification = {
   version: 8,
@@ -27,7 +28,7 @@ interface CampusMapProps {
 }
 
 function CampusMap({ selectedId, setSelectedId }: CampusMapProps) {
-  const onBuildingClick = (e) => {
+  const onBuildingClick = (e: MapLayerMouseEvent) => {
     const building = e.features?.[0].properties;
     if (!building) return;
     console.log(building.id);
@@ -65,7 +66,7 @@ function CampusMap({ selectedId, setSelectedId }: CampusMapProps) {
       interactiveLayerIds={['buildings']}
       onClick={onBuildingClick}
     >
-      <Source id="my-data" type="geojson" data={geojson as FeatureCollection}>
+      <Source id="my-data" type="geojson" data={BUILDINGS_URL}>
         <Layer {...layerStyle} />
       </Source>
     </Map>
